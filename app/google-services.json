@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "454037475209",
+    "firebase_url": "https://women-fitness-academy.firebaseio.com",
+    "project_id": "women-fitness-academy",
+    "storage_bucket": "women-fitness-academy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:454037475209:android:8d1ae0d0c3b5b4e6",
+        "android_client_info": {
+          "package_name": "com.women.fitnessacademy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "454037475209-u74eaietv4qu26f2lhrc1e2tc0se4scf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEAy0dbWhG8uSGaiY4xzLiLc2zIC2u-fo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "454037475209-u74eaietv4qu26f2lhrc1e2tc0se4scf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

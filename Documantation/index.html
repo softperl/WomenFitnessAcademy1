@@ -1,0 +1,610 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<head lang="en">
+	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+	<title>WP Connect Documentation</title>
+	<!-- Framework CSS -->
+	<link rel="stylesheet" href="assets/blueprint-css/screen.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="assets/blueprint-css/print.css" type="text/css" media="print">
+	<!--[if lt IE 8]><link rel="stylesheet" href="assets/blueprint-css/ie.css" type="text/css" media="screen, projection"><![endif]-->
+	<link rel="stylesheet" href="assets/blueprint-css/plugins/fancy-type/screen.css" type="text/css" media="screen, projection">
+	<style type="text/css" media="screen">
+		p, table, hr, .box { margin-bottom:25px; }
+		.box p { margin-bottom:10px; }
+	</style>
+</head>
+
+
+<body>
+	<div class="container">
+	
+		<h3 class="center alt">&ldquo;WP Connect&rdquo; Documentation by &ldquo;Constant-lab&rdquo; v1.8</h3>
+		
+		<hr>
+		
+		<h1 class="center">&ldquo;WP Connect&rdquo;</h1>
+		
+		<div class="borderTop">
+			<div class="span-6 colborder info prepend-1">
+				<p class="prepend-top">
+					<strong>
+					Created: 10/10/2017<br>
+					By: Constant-lab<br>
+					Email: <a href="mailto:info@constant-lab.com">info@constant-lab.com</a>
+					</strong>
+				</p>
+			</div><!-- end div .span-6 -->		
+	
+			<div class="span-12 last">
+				<p class="prepend-top append-0">Thank you for purchasing our template. For more detailed documantation please visit our online <a href="https://helpdesk.constant-lab.com/article-categories/wp-connect/" target="_blank">Knowledgebase</a> If you have any questions, please feel free to share your thoughts in our support <a href="https://helpdesk.constant-lab.com/forums/" target="_blank">forum</a>. Thanks so much!</p>
+			</div>
+		</div><!-- end div .borderTop -->
+		
+		<hr>
+		
+		<div id="wpc-alert"><h3 >Support for this item is provided through our <a href="https://helpdesk.constant-lab.com/knowledge-base/" target="_blank">Knowledgebase</a>. <br>Please leave your questions in our <a href="https://helpdesk.constant-lab.com/knowledge-base/" target="_blank">Knowledgebase</a> or <a href="https://helpdesk.constant-lab.com/forums/" target="_blank">Forum.</a>  </h3><h2>You will need a valid Purchase key to access all parts of our <a href="http://helpdesk.constant-lab.com" target="_blank">Knowledgebase.</a></h2></div>	
+
+        <hr>		
+		
+		<h2 id="toc" class="alt">Table of Contents</h2>
+		<ol class="alpha">
+			<li><a href="#configuringapi">Configuring API</a>  <em class="quiet small"> (Installing Plugins)</em></li>
+			<li><a href="#post-formats">Post Formats</a><em class="quiet small"> (Creating Gallery & Video Shortcodes)</em></li>
+			<li><a href="#preparation">Preparation</a><em class="quiet small"> (Installing Android Studio & Importing)</em></li>
+			<li><a href="#configuration">Configuration</a></li>
+			<li><a href="#navigation">Navigation</a><em class="quiet small"> (App menu setup)</em></li>
+			<li><a href="#translation">Translation</a></li>
+			<li><a href="#styling">Styling</a></li>
+			<li><a href="#notifications">Notifications</a> <em class="quiet small"> (Firebase Setup)</em></li>	
+			<li><a href="#publishing">Publishing</a><em class="quiet small"> (Submit to Playstore)</em></li>
+			<li><a href="#credits">Credits</a></li>
+		</ol>
+		
+		<hr>
+
+		<h3 id="configuringapi"><strong>A) Configuring API</strong> - <a href="#toc">top</a></h3>
+		
+		<p><strong>Required Plugins</strong></p>
+		<p>We are using default <strong>WordPress Rest API</strong>. WordPress Rest API is included in WordPress core files so you don’t need to install it on your blog.
+You will need to install and activate  <a href="https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/" target="_blank">JWT Authentication for WP-API</a> For user Authentication.</p>
+
+<strong>Configuring “JWT Authentication for WP-API” Plugin</strong>
+<p>Most of the shared hosting has disabled the HTTP Authorization Header by default.
+To enable this option you’ll need to edit your .htaccess file. “.htaccess” file is located in your website’s root folder.	</p>
+
+<p><a href="https://helpdesk.constant-lab.com/knowledge-base/configuring-api/" target="_blank"><img src="assets/images/htaccess-file.jpg" width="800px" alt=""/></a></p>
+
+<p>Please add the following code to your ".htaccess" file</p>
+
+<pre>RewriteEngine on
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule ^(.*) - [E=HTTP_AUTHORIZATION:%1]
+</pre>
+
+<p>The JWT needs a secret key to sign the token this secret key must be unique and never revealed.
+To add the secret key edit your wp-config.php file and add a new constant called JWT_AUTH_SECRET_KEY</p>
+<p>“wp-config.php” file is located in your website’s root folder.</p>
+
+<p><a href="https://helpdesk.constant-lab.com/knowledge-base/configuring-api/" target="_blank"><img src="assets/images/wp-config.jpg" width="800px" alt=""/></a></p>
+
+<pre>define('JWT_AUTH_SECRET_KEY', 'your-top-secrect-key');</pre>
+		
+<p>You can use a string from <a href="https://api.wordpress.org/secret-key/1.1/salt/" target="_blank">here</a> </p>		
+<p>For example</p>
+<pre>define('JWT_AUTH_SECRET_KEY', '`K*6l,! DA-pP@En/5g-E-{&~QQD`eJ(g^sPO96~3(Z8@_H|7hC&H%wIl31Wr%/P');</pre>
+		
+
+		
+<p>Please note some security plugins like <a href="https://wordpress.org/plugins/better-wp-security/" target="_blank">iThemes Security</a> does block WordPress API after installation. To check if your API is working please enter below URL in your browsers address bar and see if it will return the content of your website.
+http://yourwebsite.com/wp-json/wp/v2/posts (Don’t forget to change [yourwebsite.com] with your actual domain name.</p> 
+
+<p>If API is not working, please follow these steps to make it available:</p>
+
+<p>1: To make API available, navigate to the WordPress Tweaks section on the Security > Settings page of your WordPress dashboard. Click the “Configure Settings” button.</p>
+
+<p><a href="https://helpdesk.constant-lab.com/knowledge-base/configuring-api/" target="_blank"><img src="assets/images/enable-api-01.jpg" width="800px" alt=""/></a></p>
+		
+<p>2. Scroll to the REST API section. <strong>Select the “Default Access” setting.</strong></p>
+
+<p><a href="https://helpdesk.constant-lab.com/knowledge-base/configuring-api/" target="_blank"><img src="assets/images/enable-api-02.jpg" width="800px" alt=""/></a></p>
+
+<p>3. <strong>Click “Save Settings” to save your new settings</strong>.</p>		
+		
+		<hr>
+		
+		<h3 id="post-formats"><strong>B) Post Formats</strong> - <a href="#toc">top</a></h3>
+		
+	<p><strong>Post Formats and Shortcodes</strong></p>
+
+<p>Currently project supports 3 post formats (Standard, Gallery, Video). If any of these formats is chosen for a Wordpress post, the relevant icon will be shown for the post within the app. </p>
+
+<p><strong>Standard Post Format</strong> Default WordPress post format. When you create a post in WordPress its automatically assigned as “Standard Format”.
+Please note because many WordPress sites are using Visual composer or other page builders to create posts, we have stripped all shortcodes from the content for compatibility. If you want to show images or videos within your posts, please create gallery or video shortcodes and add them into “Excerpt”.</p>
+
+<p><a href="https://helpdesk.constant-lab.com/knowledge-base/post-formats/" target="_blank"><img src="assets/images/wp-excerpt.jpg" width="800px" alt=""/></a></p>
+
+<p><strong>Gallery Post Format</strong>: To show a galley post format, choose gallery format for that post and paste your gallery shortcode in post Excerpts. An example Gallery shortcode is like 
+<pre>[gallery ids="2861,2860,2859,2854,2853,2852"]</pre>. Ids are unique numbers associated with image files uploaded to your WordPress website. You can separate ids with comma ( , ).</p>
+
+<p><a href="https://helpdesk.constant-lab.com/knowledge-base/post-formats/" target="_blank"><img src="assets/images/gallery-shortcode.jpg" width="800px" alt=""/></a></p>
+
+<p>You can use WordPress default <a href="https://helpdesk.constant-lab.com/forums/topic/image-gallery-wordpress/" target="_blank">built-in feature</a> to create a Gallery shortcode. Don’t forget to paste your shortcode in “Excerpts”. App will show the gallery only if shortcode is pasted in Excerpts.</p>
+
+<p><strong>Video Post Format</strong>: To show a video post format, choose video format for that post and paste your video shortcode in post Excerpts. An example Video shortcode is like 
+<pre>[youtube ids=Kdg4DLAPC4A,A6j7mUxGz20,USIao3W2W1E]</pre>. ids are unique video IDs of youtube videos. For example in this Youtube URL https://www.youtube.com/watch?v=ysBN9NHOI0c&t, the last part of the URL (ysBN9NHOI0c&t) after = is the video ID. You can separate ids with comma ( , ).</p>
+
+<p><a href="https://helpdesk.constant-lab.com/knowledge-base/post-formats/" target="_blank"><img src="assets/images/post-formats.jpg" width="800px" alt=""/></a></p>
+
+		
+		<hr>	
+		
+		<h3 id="preparation"><strong>C) Prepration</strong> - <a href="#toc">top</a></h3>
+		
+<p><strong>Android Studio</strong></p>
+		<p>For start, you need to install Android Studio. You also need the ‘Java SE Development Kit’.
+First, download Android Studio <a href="https://developer.android.com/studio/index.html" target="_blank">here</a>. then, you will be redirected to the <a href="https://developer.android.com/studio/install.html" target="_blank">installation instructions</a> which provides instructions on Installing Studio.</p>
+<p>Now download  <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank">Java SE Development Kit</a>.</p>
+
+<p>For more information about installing Android Studio <a href="https://helpdesk.constant-lab.com/forums/topic/android-studio-installation/" terget="_blank">click here</a>.</p>
+
+<p>The installer will automatically download all required components.</p>
+
+<p>Template’s current SDK version is <a href="https://www.android.com/versions/oreo-8-0/" target="_blank">Android – 8.0 Oreo</a></p>
+<p>You can download this SDK, if it is not installed already, using the <a href="https://developer.android.com/studio/intro/update.html#sdk-manager" target="_blank">SDK Manager</a>.</p>
+
+<p><strong>Importing Project</strong></p>
+
+		<p>To import the template, simply open Android Studio and import/open the template. Make sure to wait for all the processes (the Gradle Build) to complete before continuing to the next step.</p>
+<p>As soon as you load the project in android studio, you should sync the gradle files by going to <strong>Tools -> Android -> Sync Project with Gradle Files</strong></p>
+<strong>Additional components</strong>
+
+<p>Sometimes, the Gradle Build fails. In some cases additional components are needed, Android Studio will ask you to do download these additional SDK components in the ‘messages’ tab, simply follow the instructions provided to install and download the additional components.</p> 
+		<hr>
+		
+		<h3 id="configuration"><strong>D) Configuration</strong> - <a href="#toc">top</a></h3>
+		
+<p>Config file is a list of all required information for the app to work.
+config.java file is located in <strong>java\com\constantlab\wpconnect\core\</strong>
+Below you’ll find a list of all the values and the parameters to configure app's behavior.</p>
+
+&nbsp;
+
+<strong>BASE API URL</strong>
+
+<p>If you would like to show your WordPress posts or a categories in your app, you can add your website's URL here.
+For Wordpress installation guide <a href="https://helpdesk.constant-lab.com/forums/topic/wordpress-installation/">click here</a></p>
+<pre>public static final String PRIMARY_BASE_URL = "http://yourwebsite.com/";</pre>
+&nbsp;
+
+<strong>Enable or disable slider on main page</strong>
+<p>You can disable post slider in the home page of the app by setting the value to false.</p>
+<pre>public static final boolean MAIN_PAGE_SLIDER_REQUIRED = false;</pre>
+&nbsp;
+
+<strong>Category ID for slider</strong>
+<p>Here you can enter the category ID for the slider. Slider will slide 5 latest posts from selected category.
+For more information on how to find the category ID in Wordpress  <a href="https://helpdesk.constant-lab.com/forums/topic/category-id-wordpress/">click here</a></p>
+<pre>public static final int SLIDER_CATEGORY_ID = 4;</pre>
+&nbsp;
+
+<strong>Instagram Setup</strong>
+<p>If you would like to show a list of your Instagram post, you can add your Instagram user token here.
+You can find your Instagram page ID using <a href="https://smashballoon.com/instagram-feed/find-instagram-user-id/">this tool </a> or <a href="https://www.otzberg.net/iguserid/">click here</a> for a different method.
+After you have found your user ID, You have to create an Instagram token.
+For more information on how to generate your Instagram token  <a href="https://helpdesk.constant-lab.com/forums/topic/creating-instagram-api-token/">click here</a>.</p>
+<pre>
+public static final String INSTAGRAM_TOKEN = "";
+</pre>
+&nbsp;
+
+<strong>Facebook Setup</strong>
+<p>If you would like to show a list of Facebook posts of any Facebook page you can use the following value:
+You can use following tool to find your Facebook page ID <a href="https://lookup-id.com/" target="_blank" rel="noopener">click here</a>
+After you have found you Facebook page ID, you need to create a Facebook token.
+For more information on how to generate a Facebook Token <a href="https://helpdesk.constant-lab.com/forums/topic/facebook-access-token/">click here</a></p>
+<pre>
+public static final String FACEBOOK_TOKEN = "";
+</pre>
+&nbsp;
+
+<strong>Youtube Setup</strong>
+<p>If you would like to show the list of all Youtube videos in your app, you need to find your channel ID and generate a token.
+For more information on how to find your channel ID <a href="https://helpdesk.constant-lab.com/forums/topic/youtube-channel-id/">click here</a>
+For more information on how to generate your Youtube token <a href="https://helpdesk.constant-lab.com/forums/topic/youtube-access-token/">click here</a></p>
+<pre>public static final String YOUTUBE_TOKEN = "";
+</pre>
+&nbsp;
+
+<strong>Favorites Options</strong>
+<p>Here you can show or hide the favorites section's tabs. By default app will save user's favorite options under Posts, Videos and social.
+You can set the value for any of the tabs to false to hide it.</p>
+<pre>public static final boolean SHOW_WORDPRESS_FAVORITES = true;
+public static final boolean SHOW_YOUTUBE_FAVORITES = true;
+public static final boolean SHOW_SOCIAL_FAVORITES = true;
+</pre>
+&nbsp;
+
+<strong>Navigation Setup (Drawer/Sidebar)</strong>
+<p>Here you can choose to use a local or remote navigation file. If set to "true" you have to upload navigation.json file to your server and enter the URL here. </p>
+<p>If set to "false", you have to place navigation.json file in this path <strong>app\src\main\assets\navigation.json</strong>
+You can also choose to show the section name in the navigation or not. </p>
+<pre>public static final boolean ONLINE_NAVIGATION = true;
+public static final String URL_FOR_ONLINE_NAVIGATION = "https://yourwebsite.com/navigation.json";
+public static final boolean SECTION_NAME_FOR_SINGLE_SECTION = true;
+</pre>
+&nbsp;
+
+<strong>Wordpress Registration URL</strong>
+<p>Here you have to enter the registration page URL of your Wordpress website. Default Wordpress registration URL is "http://yourwebsite.com/wp-login.php?action=register". You can change this value if you have a different registration path on your website.</p>
+<pre>
+public static final String REGISTER_URL = "https://yourwebsite.com/wp-login.php?action=register";
+</pre>
+&nbsp;
+
+<strong>Lost Password URL</strong>
+<p>Enter the lost password URL here. Default Wordpress path for lost password page is "https://yourwebsite.com/wp-login.php?action=lostpassword"</p>
+<pre>public static final String LOST_PASSWORD_URL = "https://yourwebsite.com/wp-login.php?action=lostpassword";</pre>
+&nbsp;
+
+<strong>Admob Setup</strong>
+<p>In order to activate Admob ads inside your app, you need to have an “APP ID” and “Ad UNIT ID”. If you don’t want ads inside your application, set ABMOB_IN_PRODUCTION value as false.</p>
+<p>For more information on how to obtain your Admob ID <a href="https://helpdesk.constant-lab.com/forums/topic/admob-ad-unit-id/">click here</a></p>
+<pre>public static final boolean ABMOB_IN_PRODUCTION = false;
+public static final String ABMOB_APP_ID = "";
+public static final String ADMOB_AD_UNIT_ID = "";</pre>
+&nbsp;
+
+<strong>WordPress Post Rendering</strong>
+<p>This option is for blogs those use Visual composer page builder. Set the value to false if you use default WordPress editor.</p>
+<pre>public static final boolean VISUAL_COMPOSER_RENDER = false;</pre>
+&nbsp;
+
+<strong>Webview</strong>
+<p>This option is for webview pages. You can enable or disable "pull to refresh" and "pinch to zoom" features for webview items here:</p>
+<pre>public static final boolean ENABLE_PULL_TO_REFRESH = true;
+public static final boolean WEBVIEW_ZOOM_ALLOWED = false;</pre>
+
+<strong>Login Page</strong>
+<p>This option is for login page. If set to false login screen will be hidden and user won’t be able to comment.</p>
+<pre>public static final boolean LOGIN_ENABLED = true;</pre>
+&nbsp;
+
+		<hr>
+		
+<h3 id="navigation"><strong>E) Navigation</strong> - <a href="#toc">top</a></h3>
+		
+<p><a href="https://helpdesk.constant-lab.com/knowledge-base/post-formats/" target="_blank"><img src="assets/images/navigation.jpg" width="300px" alt=""/></a></p>
+		
+<p>WP Connect has a very flexible navigation system where you can update your navigation items locally in your project or with a remote json file that you can upload on your web server.</p>
+
+<p>If you'd like to use a local conﬁguration ﬁle, you need to edit the navigation.json file in app's assets folder. This file is located in <strong>app/assets/navigation.json</strong></p>
+
+<p>You can load navigation.json ﬁle from the web, which has the advantage that you can update your app's content dynamically, without users having to update their app. Upload your navigation.json ﬁle to your web server and make sure that its has valid reachable URL .
+For example: https://yourwebsite.com/navigation.json</p>
+
+
+<strong>Editing navigation items</strong>
+<p>You can add or remove items to your app's navigation by editing navigation.json file located in <strong>app/assets/navigation.json</strong>. Below you can see an example structure used in our demo app.</p>
+<pre>
+
+{
+  "sections": [
+    {
+      "section_name": "Wordpress",
+      "items": [
+        {
+          "title": "Recent Posts",
+          "provider": "wordpress_recent",
+          "icon": "ic_today",
+          "arguments": null
+        },
+        {
+          "title": "Categories",
+          "provider": "wordpress_categories",
+          "icon": "ic_list",
+          "arguments": null
+        },
+        {
+          "title": "Single Category",
+          "provider": "wordpress_category",
+          "icon": "ic_grade",
+          "arguments": [
+            "2"
+          ]
+        }
+      ]
+    },
+    {
+      "section_name": "Youtube",
+      "items": [
+        {
+          "title": "Recent Videos",
+          "provider": "youtube_recents",
+          "icon": "ic_youtube",
+          "arguments": [
+            "UCqhnX4jA0A5paNd1v-zEysw"
+          ]
+        },
+        {
+          "title": "Playlists",
+          "provider": "youtube_playlists",
+          "icon": "ic_playlist_play",
+          "arguments": [
+            "UCqhnX4jA0A5paNd1v-zEysw"
+          ]
+        },
+        {
+          "title": "Single playlist",
+          "provider": "youtube_playlist",
+          "icon": "ic_play_arrow",
+          "arguments": [
+            "PLx_tr69QV8CD6ik-YGRmElO2AbWWi34rK"
+          ]
+        }   
+      ]
+    },
+    {
+      "section_name": "Webview",
+      "items": [
+        {
+          "title": "Mailchimp Subscription",
+          "provider": "webview",
+          "icon": "ic_web",
+          "arguments": [
+            "https://wpconnect.app/mailchimp-subscription/"
+          ]
+        },
+        {
+          "title": "Contact Form",
+          "provider": "webview",
+          "icon": "ic_web",
+          "arguments": [
+            "https://wpconnect.app/contact/"
+          ]
+        } 		
+      ]
+    },
+    {
+      "section_name": "Social",
+      "items": [
+        {
+          "title": "Instagram",
+          "provider": "instagram",
+          "icon": "ic_instagram",
+          "arguments": [
+              "3412106602"
+          ]
+        },
+        {
+          "title": "Facebook",
+          "provider": "facebook",
+          "icon": "ic_facebook",
+          "arguments": [
+              "141945449546920"
+          ]
+        }
+      ]
+    }
+  ]
+}
+</pre>
+<br>
+<strong>Providers</strong>
+
+<p>WP Connect shows content from (Wordpress, Youtube, Webview, Facebook, Instagram). Provider value defines the source of content.</p>
+
+<p>Example: if you want to show recent posts from Wordpress website, set <strong>wordpress_recent</strong> as your provider. </p>
+<pre>"provider": "wordpress_recent",</pre>
+
+<p><strong>wordpress_recent</strong>: Most recent posts from your blog.</br>
+<strong>wordpress_categories</strong>: A list of all categories on your blog.</br>
+<strong>wordpress_category</strong>: A single category from your blog.</p>
+
+<p>Example: If you want to show recent videos from Wordpress website, set <strong>youtube_recent</strong> as provider value. </p>
+<pre>"provider": "youtube_recent",</pre>
+
+<p><strong>youtube_recent</strong>: Most recent videos from Youtube channel.</br>
+<strong>youtube_playlists</strong>: A list of all the playlists from Youtube channel.</br>
+<strong>youtube_playlist</strong>: A single playlist from Youtube channel.</p>
+
+<p>Example: If you want to show a web page, set <strong>webview</strong> as provider value. </p>
+<pre>"provider": "webview",</pre>
+
+<strong>webview</strong>: Any web address (URL)</br></br>
+
+<p> Example: If you want to show recent posts from facebook, set <strong>facebook</strong> as your provider. </p>
+<pre>"provider": "facebook",</pre>
+
+<p><strong>instagram</strong>: Your Instagram feed.</br>
+<strong>facebook</strong>: Your facebook feed.</p>
+
+<strong>icons</strong>
+
+<p>You can change the icon for each item in the navigation. Simply download the <a href="https://material.io/icons/">icons</a> in PNG format and include them in your project as below:</p>
+
+<ul>
+ 	<li>res/drawable-mdpi</li>
+ 	<li>res/drawable-hdpi</li>
+ 	<li>res/drawable-xhdpi</li>
+ 	<li>res/drawable-xxhdpi</li>
+</ul>
+
+<p>After adding icons to your project, enter the name of the icon as icon value.</p>
+
+<pre>"icon": "ic_today",</pre>
+
+<p>You can use a tool, like this <a href="http://romannurik.github.io/AndroidAssetStudio/icons-launcher.html">site</a> to help you resize your images or even create an icon.</p>
+
+<strong>Arguments</strong>
+<p>Arguments are used to specify:
+single category ID, Youtube channel ID, Youtube playlist ID, Instagram page ID, Facebook page ID.</p>
+
+<table style="width:100%">
+  <tr>
+    <th>Provider</th>
+    <th>Argument</th> 
+  </tr>
+  <tr>
+    <td>wordpress_recent</td>
+    <td>null</td> 
+  </tr>
+  <tr>
+    <td>wordpress_categories</td>
+    <td>null</td> 
+  </tr>
+  <tr>
+    <td>wordpress_category</td>
+    <td>Category ID</td> 
+  </tr>
+  <tr>
+    <td>youtube_recents</td>
+    <td>Channel ID</td> 
+  </tr>
+  <tr>
+    <td>youtube_playlists</td>
+    <td>Channel ID</td> 
+  </tr>
+  <tr>
+    <td>youtube_playlist</td>
+    <td>Playlist ID</td> 
+  </tr>
+  <tr>
+    <td>webview</td>
+    <td>Web Page URL</td> 
+  </tr>
+  <tr>
+    <td>instagram</td>
+    <td>Page ID</td> 
+  </tr>
+  <tr>
+    <td>facebook</td>
+    <td>Page ID</td> 
+  </tr>
+</table>
+
+<p><strong>Single Category</strong>: If you want to show a single category with the ID "4", change the argument for wordpress_category provider to "4".</p>
+<p>For more information on how to find the category ID in WordPress  <a href="https://helpdesk.constant-lab.com/forums/topic/category-id-wordpress/" target="_blank">click here</a></p>
+<p><strong>Youtube Videos</strong>: If you want to add Youtube recent videos or all playlists from a youtube channel, add Channel ID as argument.</p>
+<p>For more information on how to find your channel ID <a href="https://helpdesk.constant-lab.com/forums/topic/youtube-channel-id/" target="_blank">click here</a></p>
+<p><strong>Single Youtube Playlist</strong>: If you are adding a single Youtube playlist, add playlist ID as argument.</p> 
+<p><strong>Webview</strong>: If you want to show a webpage, add page URL as argument.</p>
+<p>For Instagram and Facebook add the page ID as argument.</p>
+<p>You can find your Instagram page ID using <a href="https://smashballoon.com/instagram-feed/find-instagram-user-id/" target="_blank">this tool</a> or <a href="https://www.otzberg.net/iguserid/" target="_blank">click here</a> for a different method.</p>
+<p>You can use following tool to find your Facebook page ID <a href="https://lookup-id.com/" target="_blank">click here</a></p>
+
+&nbsp;
+
+<strong>Changing Navigation Logo</strong>
+
+<p>To change navigation logo, go to <strong>\app\src\main\res\drawable-nodpi</strong> and replace logo image. </p>
+
+&nbsp;
+		
+<hr>
+		
+		<h3 id="translation"><strong>F) Translation</strong> - <a href="#toc">top</a></h3>
+		
+<strong>Translating app</strong>
+<p>strings.xml found in <strong>res/values/</strong> is used to set some predefined values in the resources file and translate the app. For example to change app name, change value for the key “app_name”.</p>
+
+<p>For more details please read our <a href="https://helpdesk.constant-lab.com/knowledge-base/translation/" target="_blank">online documantation:</a></p>
+
+		<hr>
+		
+		<h3 id="styling"><strong>G) Styling</strong> - <a href="#toc">top</a></h3>
+		
+<strong>Changing APP icon</strong>
+
+<p>To change the App's icon, replace the ic_launcher.png located in :</p>
+
+<ul>
+<li>app\src\main\res\mipmap-hdpi</li>
+<li>app\src\main\res\mipmap-mdpi</li>
+<li>app\src\main\res\mipmap-xdpi</li>
+<li>app\src\main\res\mipmap-xxdpi</li>
+<li>app\src\main\res\mipmap-xxxdpi</li>
+</ul>
+
+<strong>Changing Background Images</strong>
+
+<p>To change background image for Splash screen and login pages, go to <strong>\app\src\main\res\drawable-nodpi</strong> and replace new images. </p>
+
+<strong>Changing Colors</strong>
+
+<p>colors.xml found in <strong>res/values/</strong> is used to change the colors for different elements in the project. </p>
+
+		<hr>
+		
+		<h3 id="notifications"><strong>H) Notifications</strong> - <a href="#toc">top</a></h3>
+
+<p>You can send notifications to users of your app with Firebase. To do so you need to create a Firebase project. To learn how to create your firebase project <a href="https://helpdesk.constant-lab.com/forums/topic/creating-firebase-project/" rel="noopener" target="_blank">read this</a>.</p>
+
+<p>New Firebase project will generate a file called "google-services.json". Download and copy this file to <strong>app\</strong> directory in your project so you will have <strong>app\google-services.json</strong>.</p>
+
+<p>Now you can go to Firebase console and push a notification to your app, see reports and analytics and get crash reports. </p>
+
+
+		<hr>
+
+		<h3 id="publishing"><strong>I) Publishing</strong> - <a href="#toc">top</a></h3>
+<strong>Changing App name</strong>
+
+<p>As explained in <a href="/knowledge-base/translation/" target="_blank">06 - Translation</a>, strings.xml found in <strong>res/values/</strong> is used to set some predefined values in the resources file and translate the app. To change the app name change the value for the key “app_name”.<p>
+&nbsp;
+	
+<strong>Changing package name</strong>
+<p>Make sure you have successfully created your google-services.json file explained in Notifications section.Make sure you have successfully created your <strong>google-services.json</strong> file explained in Notifications section.</p>
+<p>Before we can submit our app to the play store, you have to change your package name and compile your application.</p>
+<p>The package name is you apps unique identiﬁer. The package name of your app should always be unique to your app. E.g. com.yourcompany.yourappname.</p>
+<p>	Follow the below steps to change your package name:</p>	
+		
+<ul>
+<li>Right click on the root folder of your project.</li>
+<li>Click “Open Module Setting”.</li>
+<li>Select the module ‘App’ if it is not already selected.</li>
+<li>Go to the ‘Flavours’ tab.4. Go to the ‘Flavours’ tab.</li>
+<li>Change the applicationID to whatever package name you want.</li>
+<li>Press OK.</li>
+</ul>
+
+<a href="https://helpdesk.constant-lab.com/knowledge-base/publishing/" target="_blank"><img src="assets/images/change-package-name.png" width="800px" alt=""/></a>
+		
+		<hr>
+		
+		
+		<h3 id="credits"><strong>J) Credits</strong> - <a href="#toc">top</a></h3>
+		
+		<p>We've used the following libraries and plugin.</p>
+		
+
+		<ul>
+			<li><a href="https://github.com/square/picasso" target="_blank">Picasso</a></li>
+			<li><a href="https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor" target="_blank">OkHttp interceptor</a></li>
+			<li><a href="https://github.com/hdodenhof/CircleImageView" target="_blank">Circle Image View</a></li>
+			<li><a href="https://github.com/afollestad/material-dialogs" target="_blank">Material Dialogs</a></li>
+			<li><a href="https://github.com/chrisbanes/PhotoView" target="_blank">Photo View</a></li>
+			<li><a href="https://github.com/ogaclejapan/SmartTabLayout" target="_blank">Smart tab layout</a></li>
+			<li><a href="https://github.com/yayaa/ParallaxRecyclerView" target="_blank">Parallax recycler view</a></li>
+			<li><a href="https://github.com/chrisjenx/Calligraphy" target="_blank">Calligraphy</a></li>
+			<li><a href="https://github.com/square/retrofit" target="_blank">Retrofit</a></li>
+			<li><a href="https://github.com/google/gson" target="_blank">Gson</a></li>
+			<li><a href="https://github.com/JakeWharton/timber" target="_blank">Timber</a></li>
+			<li><a href="https://github.com/bingoogolapple/BGABanner-Android" target="_blank">BGA Banner Android</a></li>
+			<li><a href="https://github.com/flavioarfaria/KenBurnsView" target="_blank">Ken Burns View</a></li>
+			<li><a href="https://github.com/amulyakhare/TextDrawable" target="_blank">Text Drawable</a></li>
+			<li><a href="https://mvnrepository.com/artifact/org.jsoup/jsoup/1.10.3" target="_blank">Jsoup</a></li>
+			<li><a href="https://github.com/youtube/yt-android-player" target="_blank">Youtube Android Player</a></li>
+			<li><a href="https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/" target="_blank">JWT Authentication for WP REST API</a></li>
+		</ul>
+		
+		<hr>
+		
+		<p>Once again, thank you so much for purchasing this template. As I said at the beginning, We'd be glad to help you if you have any questions relating to this template. No guarantees, but we'll do our best to assist. If you have a more general question relating to the Android development, you might consider visiting our <a href="https://helpdesk.constant-lab.com/forums/" target="_blank">forum</a> and asking your question under relevant topics.</p> 
+		
+		<p class="append-bottom alt large"><strong>Constant-lab LLP</strong></p>
+		<p><a href="#toc">Go To Table of Contents</a></p>
+		
+		
+		<hr class="space">
+	</div><!-- end div .container -->
+</body>
+</html>

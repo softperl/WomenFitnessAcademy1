@@ -1,0 +1,79 @@
+{
+  "sections": [
+    {
+      "section_name": "WordPress",
+      "items": [
+        {
+          "title": "Recent Posts",
+          "provider": "wordpress_recent",
+          "icon": "ic_today",
+          "arguments": null
+        },
+        {
+          "title": "Categories",
+          "provider": "wordpress_categories",
+          "icon": "ic_list",
+          "arguments": null
+        },
+        {
+          "title": "Single Category",
+          "provider": "wordpress_category",
+          "icon": "ic_grade",
+          "arguments":[
+            "1311"
+          ]
+        }
+      ]
+    },
+    {
+      "section_name": "Youtube",
+      "items": [
+        {
+          "title": "Recent Videos",
+          "provider": "youtube_recents",
+          "icon": "ic_youtube",
+          "arguments": [
+            "UCpDJl2EmP7Oh90Vylx0dZtA"
+          ]
+        },
+        {
+          "title": "Playlists",
+          "provider": "youtube_playlists",
+          "icon": "ic_playlist_play",
+          "arguments": [
+            "UCpDJl2EmP7Oh90Vylx0dZtA"
+          ]
+        },
+        {
+          "title": "Single playlist",
+          "provider": "youtube_playlist",
+          "icon": "ic_play_arrow",
+          "arguments": [
+            "PLx_tr69QV8CD6ik-YGRmElO2AbWWi34rK"
+          ]
+        }
+      ]
+    },
+    {
+      "section_name": "Social",
+      "items": [
+        {
+          "title": "Instagram",
+          "provider": "instagram",
+          "icon": "ic_instagram",
+          "arguments": [
+            "5596951726"
+          ]
+        },
+        {
+          "title": "Facebook",
+          "provider": "facebook",
+          "icon": "ic_facebook",
+          "arguments": [
+            "461935024608137"
+          ]
+        }
+      ]
+    }
+  ]
+}
